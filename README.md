@@ -32,7 +32,7 @@ main.yml playbook
 ```
     - hosts: localhost
       roles:
-         - overdrive3000.java8 
+         - overdrive3000.ansible-java8 
 ```
 
 License
