@@ -1,0 +1,13 @@
+---
+# defaults file for java
+# Java 8
+jdk8_url: "http://download.oracle.com/otn-pub/java/jdk/8u111-b14"
+jdk8_rpm_file: "jdk-8u111-linux-x64.rpm"
+
+# Java version folders
+jdk8_unzipped_folder: "UnlimitedJCEPolicyJDK8"
+jdk8_install_folder: "jdk1.8.0_111"
+
+# JCE 8
+jce8_url: "http://download.oracle.com/otn-pub/java/jce/8"
+jce8_file: "jce_policy-8.zip"

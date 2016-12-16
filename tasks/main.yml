@@ -1,0 +1,65 @@
+---
+# Install Oracle Java 8
+
+- name: install libselinux-python binary for Ansible to work
+  yum: name=libselinux-python state=present
+
+- name: download java from Oracle site
+  get_url:
+    url: "{{ jdk8_url }}/{{ jdk8_rpm_file }}"
+    headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
+    dest: "/tmp/{{ jdk8_rpm_file }}"
+
+- name: download JCE
+  get_url:
+    url: "{{ jce8_url }}/{{ jce8_file }}"
+    headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
+    dest: "/tmp/{{ jce8_file }}"
+
+- name: ensure problematic packages are not installed
+  yum: name="{{ item }}" state=absent
+  with_items:
+    - sun-javadb-core
+    - sun-javadb-client
+    - sun-javadb-docs
+    - sun-javadb-javadoc
+    - sun-javadb-demo
+    - sun-javadb-common
+
+- name: install Oracle JDK 8
+  yum:
+    name: "/tmp/{{ jdk8_rpm_file }}"
+    state: present
+
+- name: ensure unzip package is installed
+  yum: name=unzip state=present
+
+- name: unzip JCE
+  unarchive:
+    src: "/tmp/{{ jce8_file }}"
+    dest: "/tmp"
+    remote_src: yes
+
+- name: install jar files
+  copy:
+    src: "/tmp/{{ jdk8_unzipped_folder }}/{{ item }}"
+    dest: "/usr/java/{{ jdk8_install_folder }}/jre/lib/security/{{ item }}"
+    remote_src: yes
+  with_items:
+    - local_policy.jar
+    - US_export_policy.jar
+
+- name: make sure /etc/profile.d exists
+  file: path=/etc/profile.d  state=directory
+
+- name: export JAVA_HOME
+  copy:
+    src: java_home.sh
+    dest: /etc/profile.d/java_home.sh
+    mode: "a+x"
+
+- name: remove temporary downloaded files
+  file: path={{ item }} state=absent
+  with_items:
+    - /tmp/jdk-8u111-linux-x64.rpm
+    - /tmp/jce_policy-8.zip
