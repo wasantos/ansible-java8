@@ -1,8 +1,11 @@
 ---
 # defaults file for java
 # Java 8
-jdk8_url: "http://download.oracle.com/otn-pub/java/jdk/8u111-b14"
-jdk8_rpm_file: "jdk-8u111-linux-x64.rpm"
+#jdk8_url: "http://download.oracle.com/otn-pub/java/jdk/8u111-b14"
+jdk8_url: "http://download.oracle.com/otn-pub/java/jdk/8u131-b11"
+jdk8_rpm_file: "jdk-8u131-linux-x64.rpm"
+#jdk8_url: "http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm"
+#jdk8_rpm_file: "jdk-8u111-linux-x64.rpm"
 
 # Java version folders
 jdk8_unzipped_folder: "UnlimitedJCEPolicyJDK8"
